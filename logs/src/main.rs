@@ -1,4 +1,5 @@
 use std::fs;
+use std::io::Error;
 
 fn extract_errors(text: &str) -> Vec<String> {
     let split_text = text.split("\n");
@@ -14,11 +15,16 @@ fn extract_errors(text: &str) -> Vec<String> {
     results
 }
 
-fn main() {
-    let text = fs::read_to_string("logs.txt").expect("Failed to read logs.txt");
-    let errors = extract_errors(text.as_str());
+fn main() -> Result<(), Error> {
+    let text = fs::read_to_string("logs.txt")?;
+    let error_logs = extract_errors(text.as_str());
+    fs::write("errors.txt", error_logs.join("\n"))?;
 
-    fs::write("errors.txt", errors.join("\n")).expect("Failed to write to errors.txt");
+    Ok(())
+    // let text = fs::read_to_string("logs.txt").expect("Failed to read logs.txt");
+    // let error_logs = extract_errors(text.as_str());
+
+    // fs::write("errors.txt", errors.join("\n")).expect("Failed to write to errors.txt");
 
     // match fs::read_to_string("logs.txt") {
     //     Ok(text) => {
