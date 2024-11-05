@@ -1,6 +1,6 @@
-use num_traits::{Float, ToPrimitive};
+use num_traits::ToPrimitive;
 
-fn solve<T: Float, U: Float>(a: T, b: U) -> f64 {
+fn solve<T: ToPrimitive, U: ToPrimitive>(a: T, b: U) -> f64 {
     let a_f64 = a.to_f64().unwrap();
     let b_f64 = b.to_f64().unwrap();
 
@@ -9,7 +9,7 @@ fn solve<T: Float, U: Float>(a: T, b: U) -> f64 {
 
 fn main() {
     let a: f32 = 3.0;
-    let b: f64 = 4.0;
+    let b: isize = 4;
 
     println!("{}", solve(a, b))
 }
