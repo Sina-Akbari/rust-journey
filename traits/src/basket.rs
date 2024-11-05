@@ -1,21 +1,21 @@
 pub struct Basket<T> {
-    item: Option<T>,
+    items: Option<T>,
 }
 
 impl<T> Basket<T> {
     pub fn new(value: T) -> Self {
-        Basket { item: Some(value) }
+        Basket { items: Some(value) }
     }
 
     pub fn get(&mut self) -> Option<T> {
-        self.item.take()
+        self.items.take()
     }
 
     pub fn put(&mut self, value: T) {
-        self.item = Some(value);
+        self.items = Some(value);
     }
 
     pub fn is_empty(&self) -> bool {
-        self.item.is_none()
+        self.items.is_none()
     }
 }
