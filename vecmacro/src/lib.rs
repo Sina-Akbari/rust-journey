@@ -1,8 +1,10 @@
 #[macro_export]
 macro_rules! avec {
     ($($element:expr),*) => {{
+      const COUNT: usize = $crate::count![@COUNT; $($element),*];
+
        #[allow(unused_mut)]
-        let mut vs = Vec::new();
+        let mut vs = Vec::with_capacity(COUNT);
         $(vs.push($element);)*
         vs
     }};
@@ -14,6 +16,16 @@ macro_rules! avec {
       vs.resize($count, $element);
       vs
     }}
+}
+
+#[macro_export]
+#[doc(hidden)]
+macro_rules! count {
+    (@COUNT; $($element:expr),*) => {
+      <[()]>::len(&[$($crate::count![@SUBST; $element]),*])
+    };
+
+    (@SUBST; $element:expr) =>{()}
 }
 
 #[test]
