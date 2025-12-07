@@ -1,6 +1,19 @@
 use std::collections::VecDeque;
-use std::io::empty;
 use std::sync::{Arc, Condvar, Mutex};
+
+// Flavors of Channels
+// Synchronous: Channel where send can block. Limited Capacity.
+//  Mutex + Condvar + VecDeque
+//  Atmoic VecDeque (atomic queue) + thread::park + thread::Thread::notify
+// Asynchronous: Channel where send cannot block. Unbound.
+//  Mutex + Condvar + VecDeque
+//  Mutex + Condvar + LinkedList
+//  Atomic LinkedList, LinkedList of T
+//  Atomic block LinkedList, LinkedList of Atomic VecDeque<T>
+// Rendevouz: Synchronous channel where capacity is 0. Sync sender and recevier threads(They meet at the rendevouz)
+// Oneshot: Any capacity. In practice, only one call to send.
+
+// async
 
 struct Inner<T> {
     queue: VecDeque<T>,
